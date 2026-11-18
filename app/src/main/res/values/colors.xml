@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blood_primary">#D32F2F</color>
+    <color name="blood_primary_dark">#B71C1C</color>
+    <color name="blood_accent">#E53935</color>
+    <color name="blood_light_bg">#FFEBEE</color>
+    <color name="blood_surface">#FFFFFF</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
 </resources>

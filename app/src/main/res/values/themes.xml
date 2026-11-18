@@ -2,7 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.AndroidMedical" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/blood_primary</item>
+        <item name="colorPrimaryDark">@color/blood_primary_dark</item>
+        <item name="colorSecondary">@color/blood_accent</item>
+        <item name="android:windowBackground">@color/blood_light_bg</item>
     </style>
 
     <style name="Theme.AndroidMedical" parent="Base.Theme.AndroidMedical" />
