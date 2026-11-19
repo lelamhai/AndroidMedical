@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_campaign"
+        android:icon="@drawable/icon_campaign_24"
+        android:title="Chiến dịch" />
+    <item
+        android:id="@+id/nav_register"
+        android:icon="@drawable/icon_person_heart_24"
+        android:title="Đăng ký" />
+    <item
+        android:id="@+id/nav_notification"
+        android:icon="@drawable/icon_notifications_24"
+        android:title="Thông báo" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/icon_settings_account_box_24"
+        android:title="Hồ sơ" />
+</menu>

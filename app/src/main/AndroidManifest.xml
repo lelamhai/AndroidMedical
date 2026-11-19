@@ -29,7 +29,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".screens.MainScreen"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize" />
     </application>
 
