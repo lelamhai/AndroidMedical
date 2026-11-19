@@ -31,6 +31,10 @@
             android:name=".screens.MainScreen"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".screens.MapScreen"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
