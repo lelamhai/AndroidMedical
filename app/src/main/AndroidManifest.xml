@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidMedical">
         <activity
-            android:name=".LoginScreen"
+            android:name=".screens.LoginScreen"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterScreen"
-            android:exported="false"
+            android:name=".screens.RegisterScreen"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".MainScreen"
+            android:name=".screens.MainScreen"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

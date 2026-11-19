@@ -1,4 +1,4 @@
-package com.example.androidmedical;
+package com.example.androidmedical.screens;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.androidmedical.R;
 import com.example.androidmedical.api.RetrofitClient;
 import com.example.androidmedical.model.LoginRequest;
 import com.example.androidmedical.model.LoginResponse;
