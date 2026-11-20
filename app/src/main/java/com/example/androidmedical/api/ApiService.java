@@ -1,6 +1,7 @@
 package com.example.androidmedical.api;
 
 import com.example.androidmedical.model.CampaignListResponse;
+import com.example.androidmedical.model.CampaignRegistrationResponse;
 import com.example.androidmedical.model.CampaignSearchResponse;
 import com.example.androidmedical.model.LoginRequest;
 import com.example.androidmedical.model.LoginResponse;
@@ -10,6 +11,7 @@ import com.example.androidmedical.model.RegisterResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -25,4 +27,10 @@ public interface ApiService {
 
     @GET("api/Campaign/search")
     Call<CampaignSearchResponse> searchCampaigns(@Query("text") String text);
+
+    @GET("api/CampaignRegistration/future")
+    Call<CampaignRegistrationResponse> getFutureRegistrations(@Header("Authorization") String authorization);
+
+    @GET("api/CampaignRegistration/history")
+    Call<CampaignRegistrationResponse> getHistoryRegistrations(@Header("Authorization") String authorization);
 }
