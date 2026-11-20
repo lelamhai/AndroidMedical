@@ -40,7 +40,7 @@ public class RegisterFragment extends Fragment {
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) {
-                tab.setText("Sắp tới");
+                tab.setText("Đăng ký");
             } else {
                 tab.setText("Lịch sử");
             }

@@ -97,11 +97,11 @@
                 android:id="@+id/btnDirections"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:layout_weight="1"
                 android:text="Chỉ đường"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blood_primary"
+                app:backgroundTint="@android:color/holo_blue_bright"
                 app:cornerRadius="8dp" />
 
         </LinearLayout>

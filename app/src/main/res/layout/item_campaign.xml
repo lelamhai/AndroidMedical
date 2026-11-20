@@ -29,15 +29,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📍 Địa điểm: "
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="Location Icon"
+                app:srcCompat="@drawable/icon_address_hospital_24"
+                app:tint="@color/blood_primary" />
 
             <TextView
                 android:id="@+id/tvCampaignLocation"
@@ -53,15 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📅 Thời gian: "
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="Schedule Icon"
+                app:srcCompat="@drawable/icon_schedule_24"
+                app:tint="@color/blood_primary" />
 
             <TextView
                 android:id="@+id/tvCampaignDate"
@@ -85,22 +87,22 @@
                 android:id="@+id/btnRegisterCampaign"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_marginEnd="6dp"
+                android:layout_weight="1"
                 android:text="Đăng ký"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blood_primary"
+                app:backgroundTint="@color/blood_primary_dark"
                 app:cornerRadius="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDirections"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:layout_weight="1"
                 android:text="Chỉ đường"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blood_primary_dark"
+                app:backgroundTint="@android:color/holo_blue_bright"
                 app:cornerRadius="8dp" />
 
         </LinearLayout>
