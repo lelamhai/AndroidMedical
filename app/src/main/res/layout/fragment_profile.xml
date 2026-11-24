@@ -34,12 +34,46 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:contentDescription="Avatar"
-                        app:srcCompat="@drawable/icon_person_heart_24"
-                        app:tint="@color/blood_primary" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <!-- Circular Avatar Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivAvatar"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/avatar"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- Badge with icon_image_24 at bottom right -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImageIcon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="4dp"
+                            app:strokeColor="@color/blood_light_bg"
+                            app:strokeWidth="1dp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                            app:layout_constraintEnd_toEndOf="@id/ivAvatar">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Edit Avatar"
+                                android:padding="6dp"
+                                app:srcCompat="@drawable/icon_image_24"
+                                app:tint="@color/blood_primary" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/tvFullName"
@@ -51,14 +85,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvRole"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Role"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
+
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -96,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Loại Máu / Blood Type"
+                            android:text="Loại Máu"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -132,7 +159,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thông tin cá nhân"
+                        android:text="Thông tin cá nhân &amp; Y tế"
                         android:textColor="@color/blood_primary_dark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -227,15 +254,58 @@
                             android:textColor="@color/text_primary" />
                     </LinearLayout>
 
+                    <!-- Disease Notes -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Ghi chú y tế:"
+                            android:textColor="@color/text_secondary"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDiseaseNotes"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="--"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+
+                    <!-- Result Date -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày kết quả:"
+                            android:textColor="@color/text_secondary"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvResultDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="--"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+
                     <!-- Created At -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:text="Ngày tạo TK:"
+                            android:text="Ngày tạo:"
                             android:textColor="@color/text_secondary"
                             android:textStyle="bold" />
                         <TextView

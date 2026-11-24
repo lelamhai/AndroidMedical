@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,10 +20,12 @@ import android.widget.Toast;
 
 import com.example.androidmedical.R;
 import com.example.androidmedical.api.RetrofitClient;
-import com.example.androidmedical.model.UserProfile;
-import com.example.androidmedical.model.UserProfileResponse;
+import com.example.androidmedical.model.MedicalInfoData;
+import com.example.androidmedical.model.UserInfo;
+import com.example.androidmedical.model.UserMedicalInfoResponse;
 import com.example.androidmedical.screens.LoginScreen;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,9 +33,12 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView tvFullName, tvRole, tvBloodType, tvEmail, tvPhone, tvGender, tvDob, tvCreatedAt;
+    private TextView tvFullName, tvBloodType, tvDiseaseNotes, tvResultDate, tvEmail, tvPhone, tvGender, tvDob, tvCreatedAt;
     private ProgressBar progressBar;
     private MaterialButton btnLogout;
+    private ShapeableImageView ivAvatar;
+    private View cardImageIcon;
+    private ActivityResultLauncher<String> imagePickerLauncher;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -48,8 +55,9 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvFullName = view.findViewById(R.id.tvFullName);
-        tvRole = view.findViewById(R.id.tvRole);
         tvBloodType = view.findViewById(R.id.tvBloodType);
+        tvDiseaseNotes = view.findViewById(R.id.tvDiseaseNotes);
+        tvResultDate = view.findViewById(R.id.tvResultDate);
         tvEmail = view.findViewById(R.id.tvEmail);
         tvPhone = view.findViewById(R.id.tvPhone);
         tvGender = view.findViewById(R.id.tvGender);
@@ -57,6 +65,19 @@ public class ProfileFragment extends Fragment {
         tvCreatedAt = view.findViewById(R.id.tvCreatedAt);
         progressBar = view.findViewById(R.id.progressBar);
         btnLogout = view.findViewById(R.id.btnLogout);
+        ivAvatar = view.findViewById(R.id.ivAvatar);
+        cardImageIcon = view.findViewById(R.id.cardImageIcon);
+
+        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                ivAvatar.setImageURI(uri);
+                Toast.makeText(getContext(), "Đã cập nhật ảnh đại diện", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        View.OnClickListener pickImageListener = v -> imagePickerLauncher.launch("image/*");
+        ivAvatar.setOnClickListener(pickImageListener);
+        cardImageIcon.setOnClickListener(pickImageListener);
 
         btnLogout.setOnClickListener(v -> {
             if (getContext() != null) {
@@ -68,10 +89,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        fetchUserProfile();
+        fetchUserMedicalInfo();
     }
 
-    private void fetchUserProfile() {
+    private void fetchUserMedicalInfo() {
         if (getContext() == null) return;
         progressBar.setVisibility(View.VISIBLE);
 
@@ -79,38 +100,52 @@ public class ProfileFragment extends Fragment {
         String token = prefs.getString("ACCESS_TOKEN", "");
         String authHeader = "Bearer " + token;
 
-        RetrofitClient.getApiService().getUserProfile(authHeader).enqueue(new Callback<UserProfileResponse>() {
+        RetrofitClient.getApiService().getUserMedicalInfo(authHeader).enqueue(new Callback<UserMedicalInfoResponse>() {
             @Override
-            public void onResponse(@NonNull Call<UserProfileResponse> call, @NonNull Response<UserProfileResponse> response) {
+            public void onResponse(@NonNull Call<UserMedicalInfoResponse> call, @NonNull Response<UserMedicalInfoResponse> response) {
                 if (!isAdded()) return;
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    UserProfileResponse res = response.body();
-                    UserProfile profile = res.getData();
-                    if (profile != null) {
-                        String fullName = (profile.getFirstName() != null ? profile.getFirstName() : "") +
-                                " " + (profile.getLastName() != null ? profile.getLastName() : "");
-                        tvFullName.setText(fullName.trim().isEmpty() ? "Chưa cập nhật" : fullName.trim());
-                        tvRole.setText(profile.getRole() != null ? profile.getRole() : "User");
-                        tvBloodType.setText(profile.getBloodType() != null && !profile.getBloodType().isEmpty() ? profile.getBloodType() : "Chưa rõ");
-                        tvEmail.setText(profile.getEmail() != null ? profile.getEmail() : "Chưa có");
-                        tvPhone.setText(profile.getPhone() != null && !profile.getPhone().isEmpty() ? profile.getPhone() : "Chưa cập nhật");
-                        tvGender.setText(profile.getGender() != null && !profile.getGender().isEmpty() ? profile.getGender() : "Chưa cập nhật");
+                    UserMedicalInfoResponse res = response.body();
+                    MedicalInfoData medicalData = res.getData();
+                    if (medicalData != null) {
+                        // Blood type, disease notes, result date
+                        tvBloodType.setText(medicalData.getBloodType() != null && !medicalData.getBloodType().isEmpty() ? medicalData.getBloodType() : "Chưa rõ");
+                        tvDiseaseNotes.setText(medicalData.getDiseaseNotes() != null && !medicalData.getDiseaseNotes().isEmpty() ? medicalData.getDiseaseNotes() : "Không có");
+                        
+                        String resultDate = medicalData.getResultDate();
+                        tvResultDate.setText(resultDate != null && !resultDate.isEmpty() ? resultDate.replace("T", " ") : "Chưa cập nhật");
 
-                        String dob = profile.getDateOfBirth();
-                        tvDob.setText(dob != null && !dob.isEmpty() ? dob.replace("T", " ") : "Chưa cập nhật");
+                        // User info
+                        UserInfo user = medicalData.getUser();
+                        if (user != null) {
+                            String fullName = user.getFullName() != null && !user.getFullName().isEmpty() 
+                                    ? user.getFullName() 
+                                    : ((user.getFirstName() != null ? user.getFirstName() : "") + " " + (user.getLastName() != null ? user.getLastName() : ""));
+                            tvFullName.setText(fullName.trim().isEmpty() ? "Chưa cập nhật" : fullName.trim());
+                            tvEmail.setText(user.getEmail() != null ? user.getEmail() : "Chưa có");
+                            tvPhone.setText(user.getPhone() != null && !user.getPhone().isEmpty() ? user.getPhone() : "Chưa cập nhật");
+                            tvGender.setText(user.getGender() != null && !user.getGender().isEmpty() ? user.getGender() : "Chưa cập nhật");
 
-                        String createdAt = profile.getCreatedAt();
-                        tvCreatedAt.setText(createdAt != null && !createdAt.isEmpty() ? createdAt.replace("T", " ") : "Chưa cập nhật");
+                            String dob = user.getDateOfBirth();
+                            tvDob.setText(dob != null && !dob.isEmpty() ? dob.replace("T", " ") : "Chưa cập nhật");
+
+                            String createdAt = user.getCreatedAt();
+                            tvCreatedAt.setText(createdAt != null && !createdAt.isEmpty() ? createdAt.replace("T", " ") : "Chưa cập nhật");
+                        }
                     }
                 } else {
-                    Toast.makeText(getContext(), "Không thể tải thông tin cá nhân", Toast.LENGTH_SHORT).show();
+                    String errorMsg = "Không thể tải thông tin y tế cá nhân";
+                    if (response.code() == 401) {
+                        errorMsg = "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.";
+                    }
+                    Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserProfileResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<UserMedicalInfoResponse> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();

@@ -7,7 +7,7 @@ import com.example.androidmedical.model.LoginRequest;
 import com.example.androidmedical.model.LoginResponse;
 import com.example.androidmedical.model.RegisterRequest;
 import com.example.androidmedical.model.RegisterResponse;
-import com.example.androidmedical.model.UserProfileResponse;
+import com.example.androidmedical.model.UserMedicalInfoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -35,6 +35,6 @@ public interface ApiService {
     @GET("api/CampaignRegistration/history")
     Call<CampaignRegistrationResponse> getHistoryRegistrations(@Header("Authorization") String authorization);
 
-    @GET("api/Auth/profile")
-    Call<UserProfileResponse> getUserProfile(@Header("Authorization") String authorization);
+    @GET("api/User/medical-info")
+    Call<UserMedicalInfoResponse> getUserMedicalInfo(@Header("Authorization") String authorization);
 }
